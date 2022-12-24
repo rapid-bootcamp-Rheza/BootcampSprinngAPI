@@ -15,9 +15,14 @@ public class ProductModel {
     private String code;
     private Double price;
 
-    private Integer categoryId;
+    private Long categoryId;
 
     private String categoryName;
+
+    private Long supplierId;
+
+    private String supplierName;
+
 
     public ProductModel(ProductEntity entity){
 //        this.id = entity.getId();
@@ -29,6 +34,10 @@ public class ProductModel {
         if (entity.getCategory() != null){
             this.categoryName = entity.getCategory().getName();
         }
+//        if (entity.getSupplier() != null){
+//            this.supplierName = entity.getSupplier().getSupplierName();
+//        }
+
     }
 
     public ProductModel(int id, String name, Double price) {

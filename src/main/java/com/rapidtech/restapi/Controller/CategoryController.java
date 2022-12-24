@@ -28,7 +28,7 @@ public class CategoryController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object> getById(@PathVariable("id") Integer id){
+    public ResponseEntity<Object> getById(@PathVariable("id") Long id){
         Optional<CategoryModel> result = service.getById(id);
         return ResponseEntity.ok().body(
                 new ResponseModel(200,"SUCCESS", result)
@@ -44,7 +44,7 @@ public class CategoryController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Object> updateCategory(@PathVariable("id") Integer id, @RequestBody CategoryModel request){
+    public ResponseEntity<Object> updateCategory(@PathVariable("id") Long id, @RequestBody CategoryModel request){
         Optional<CategoryModel> result = service.update(id, request);
         return ResponseEntity.ok().body(
                 new ResponseModel(200,"SUCCESS", result)
@@ -52,7 +52,7 @@ public class CategoryController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> delete(@PathVariable("id") Integer id){
+    public ResponseEntity<Object> delete(@PathVariable("id") Long id){
         Optional<CategoryModel> result = service.delete(id);
         return ResponseEntity.ok().body(
                 new ResponseModel(200,"SUCCESS", result)

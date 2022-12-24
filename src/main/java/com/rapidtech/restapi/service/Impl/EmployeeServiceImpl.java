@@ -1,9 +1,12 @@
 package com.rapidtech.restapi.service.Impl;
 
 import com.rapidtech.restapi.entity.CategoryEntity;
+import com.rapidtech.restapi.entity.EmployeeEntity;
 import com.rapidtech.restapi.model.CategoryModel;
-import com.rapidtech.restapi.repository.CategoryRepo;
-import com.rapidtech.restapi.service.CategoryService;
+import com.rapidtech.restapi.model.EmployeeModel;
+import com.rapidtech.restapi.model.ProductModel;
+import com.rapidtech.restapi.repository.EmployeeRepo;
+import com.rapidtech.restapi.service.EmployeeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,53 +18,51 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Service
-public class CategoryServiceImpl implements CategoryService {
-    private CategoryRepo repo;
+public class EmployeeServiceImpl implements EmployeeService {
+
+    private EmployeeRepo repo;
 
     @Autowired
-    public CategoryServiceImpl(CategoryRepo repo) {
-        this.repo = repo;
+    private EmployeeServiceImpl (EmployeeRepo repo){
+        this.repo=repo;
     }
-
     @Override
-    public List<CategoryModel> getAll() {
-        return this.repo.findAll().stream().map(CategoryModel::new)
+    public List<EmployeeModel> getAll() {
+        return this.repo.findAll().stream().map(EmployeeModel::new)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public Optional<CategoryModel> getById(Long id) {
+    public Optional<EmployeeModel> getById(Long id) {
         if(id == 0) {
             return Optional.empty();
         }
-        Optional<CategoryEntity> result = this.repo.findById(id);
-        return result.map(CategoryModel::new);
+        Optional<EmployeeEntity> result = this.repo.findById(id);
+        return result.map(EmployeeModel::new);
     }
 
-
     @Override
-    public Optional<CategoryModel> save(CategoryModel model) {
+    public Optional<EmployeeModel> save(EmployeeModel model) {
         if(model == null) {
             return Optional.empty();
         }
-        CategoryEntity entity = new CategoryEntity(model);
+        EmployeeEntity entity = new EmployeeEntity(model);
         try {
             this.repo.save(entity);
-            return Optional.of(new CategoryModel(entity));
+            return Optional.of(new EmployeeModel(entity));
         }catch (Exception e){
             log.error("Category save is failed, error: {}", e.getMessage());
             return Optional.empty();
         }
     }
 
-
     @Override
-    public Optional<CategoryModel> update(Long id, CategoryModel model) {
+    public Optional<EmployeeModel> update(Long id, EmployeeModel model) {
         if(id == 0) {
             return Optional.empty();
         }
 
-        CategoryEntity result = this.repo.findById(id).orElse(null);
+        EmployeeEntity result = this.repo.findById(id).orElse(null);
         if(result == null){
             return Optional.empty();
         }
@@ -70,30 +71,29 @@ public class CategoryServiceImpl implements CategoryService {
         BeanUtils.copyProperties(model, result);
         try {
             this.repo.save(result);
-            return Optional.of(new CategoryModel(result));
+            return Optional.of(new EmployeeModel(result));
         }catch (Exception e){
-            log.error("Category update is failed, error: {}", e.getMessage());
+            log.error("Employee update is failed, error: {}", e.getMessage());
             return Optional.empty();
         }
     }
 
-
     @Override
-    public Optional<CategoryModel> delete(Long id) {
+    public Optional<EmployeeModel> delete(Long id) {
         if(id == 0) {
             return Optional.empty();
         }
 
-        CategoryEntity result = this.repo.findById(id).orElse(null);
+        EmployeeEntity result = this.repo.findById(id).orElse(null);
         if(result == null){
             return Optional.empty();
         }
 
         try {
             this.repo.delete(result);
-            return Optional.of(new CategoryModel(result));
+            return Optional.of(new EmployeeModel(result));
         }catch (Exception e){
-            log.error("Category delete is failed, error: {}", e.getMessage());
+            log.error("Employee delete is failed, error: {}", e.getMessage());
             return Optional.empty();
         }
     }

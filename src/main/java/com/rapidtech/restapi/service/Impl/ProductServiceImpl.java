@@ -31,11 +31,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Optional<ProductModel> getById(Integer id){
+    public Optional<ProductModel> getById(Long id){
         if(id == 0) {
             return Optional.empty();
         }
-        Optional<ProductEntity> result = this.repo.findById(String.valueOf(id));
+        Optional<ProductEntity> result = this.repo.findById(id);
         /*
         if(result.isEmpty()){
             return Optional.empty();
@@ -62,11 +62,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Optional<ProductModel> update(Integer id, ProductModel model) {
+    public Optional<ProductModel> update(Long id, ProductModel model) {
        if (id == 0){
            return Optional.empty();
        }
-       ProductEntity result = this.repo.findById(String.valueOf(id)).orElse(null);
+       ProductEntity result = this.repo.findById(id).orElse(null);
         if (result==null){
             return Optional.empty();
         }
@@ -82,11 +82,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Optional<ProductModel> delete(Integer id) {
+    public Optional<ProductModel> delete(Long id) {
         if (id == 0) {
             return Optional.empty();
         }
-        ProductEntity result = this.repo.findById(String.valueOf(id)).orElse(null);
+        ProductEntity result = this.repo.findById(id).orElse(null);
         if (result == null){
             return Optional.empty();
         }

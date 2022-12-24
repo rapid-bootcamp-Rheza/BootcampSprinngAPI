@@ -7,7 +7,9 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.BeanUtils;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @NoArgsConstructor
@@ -24,7 +26,7 @@ public class CategoryEntity {
             pkColumnValue="category_id", initialValue=0, allocationSize=0)
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "id_generator")
     @Column(name = "id", length = 36)
-    private int id;
+    private Long id;
 
     @Column(name = "category_code", length = 20,nullable = false)
     private String code;
@@ -33,7 +35,7 @@ public class CategoryEntity {
     private String name;
 
     @OneToMany(mappedBy = "category")
-    private Set<ProductEntity> products = new HashSet<>();
+    private List<ProductEntity> products = new ArrayList<>();
 
     public CategoryEntity(CategoryModel model){
         BeanUtils.copyProperties(model,this);
